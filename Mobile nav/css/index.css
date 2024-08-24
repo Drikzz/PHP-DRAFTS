@@ -1,0 +1,126 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+body {
+ height: 1000px;
+}
+
+.navigation-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    box-shadow: black (0 -5 10);
+    background-color: white;
+}
+
+
+.navigation-bar div a {
+    text-decoration: none;
+    color: black;
+}
+
+.logo {
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    /* background-color: lightblue; */
+}
+
+.nav-buttons .buttons:hover {
+    background-color: black;
+    color: white;
+}
+
+.hamburger {
+    /* background-color: lightblue; */
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+.hamburger .burger-line {
+    width: 100%;
+    height: 15%;
+    background-color: black;
+}
+
+.row {
+    width: 100%;
+    height: 500px;
+}
+
+.picture {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.mobile-nav {
+   background-color: white;
+   display: none;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.main-nav .button {
+    text-decoration: none;
+}
+
+.main-nav div {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.row-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    padding: 10px;
+}
+
+.row-header p {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+@media screen and (min-width: 425px) {
+    .d-flex {
+        
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .mobile-nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: none;
+    }
+}
