@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library catalogs</title>
-    <link rel="stylesheet" href="library.css">
+    <link rel="stylesheet" href="library.css?v=<?php echo time(); ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <p>Library</p>
+        <p class="logo">The Book Haven</p>
         <a href="addbook.php">Add Product</a>
     </header>
     <table>
@@ -36,6 +39,7 @@
             $i = 1;
 
             foreach($array as $arr) {
+
                 // Convert the comma-separated age_group string back into an array
                 $age_group_array = explode(',', $arr['book_age_group']);
                 // Join the array elements into a comma-separated string for display

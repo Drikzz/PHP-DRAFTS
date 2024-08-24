@@ -2,7 +2,7 @@
     require_once('function_clean.php');
 
     $title = $author = $genre = $publisher = $pub_date = $edition = $copies = $format = $rating = $desc = '';
-    $age_group = [];
+    $age_group = []; //Initialize age group as array
     $titleErr = $authorErr = $genreErr = $publisherErr = $pub_dateErr = $editionErr = $copiesErr = $formatErr = $age_groupErr = $ratingErr = $descErr = '';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -17,12 +17,9 @@
         $copies = clean($_POST['copies']);
         $format = (isset($_POST['format'])) ? clean($_POST['format']): '';
 
-        //needs to be an array, i used implode to convert array to string
+        // Check if 'age_group' is set and clean each value
         if (isset($_POST['age_group'])) {
-            $age_group = array_map('clean', $_POST['age_group']); // Clean each value
-            $age_group = implode(',', $age_group); // Convert array to comma-separated string
-        } else {
-            $age_group = '';
+            $age_group = array_map('clean', $_POST['age_group']); // Keep the age group as an array
         }
         
         $rating = clean($_POST['rating']);
@@ -96,7 +93,7 @@
             $bookObj->edition = $edition;
             $bookObj->copies = $copies;
             $bookObj->format = $format;
-            $bookObj->age_group = $age_group;
+            $bookObj->age_group = implode(',', $age_group); // Convert to string only when saving to DB
             $bookObj->rating = $rating;
             $bookObj->description = $desc;
 
@@ -115,7 +112,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Book</title>
     <link rel="stylesheet" href="addbook.css">
     <style>
         .error {
@@ -217,7 +214,7 @@
         <br>
         <input type="number" name="copies" id="copies" value="<?= $copies ?>" placeholder="Enter number of copies">
         <?php
-            if (!empty($copies)) {
+            if (!empty($copiesErr)) {
                 ?>
                 <span class="error"><?= $copiesErr ?></span>
                 <?php
@@ -239,19 +236,20 @@
         <br>
 
         <label for="age_group">Age Group</label>
-        <br>
-        <input type="checkbox" name="age_group[]" id="Kids" value="Kids" <?= in_array('Kids', $age_group) ? 'checked' : '' ?>>
-        <label for="Kids">Kids</label>
-        <input type="checkbox" name="age_group[]" id="Teens" value="Teens" <?= in_array('Teens', $age_group) ? 'checked' : '' ?>>
-        <label for="Teens">Teens</label>
-        <input type="checkbox" name="age_group[]" id="Adult" value="Adult" <?= in_array('Adult', $age_group) ? 'checked' : '' ?>>
-        <label for="Adult">Adult</label>
-        <?php
-            if (!empty($age_groupErr)) {
-                echo "<span class='error'>$age_groupErr</span>";
-            }
-        ?>
-        <br>
+<br>
+<input type="checkbox" name="age_group[]" id="Kids" value="Kids" <?= in_array('Kids', $age_group) ? 'checked' : '' ?>>
+<label for="Kids">Kids</label>
+<input type="checkbox" name="age_group[]" id="Teens" value="Teens" <?= in_array('Teens', $age_group) ? 'checked' : '' ?>>
+<label for="Teens">Teens</label>
+<input type="checkbox" name="age_group[]" id="Adult" value="Adult" <?= in_array('Adult', $age_group) ? 'checked' : '' ?>>
+<label for="Adult">Adult</label>
+<?php
+    if (!empty($age_groupErr)) {
+        echo "<span class='error'>$age_groupErr</span>";
+    }
+?>
+<br>
+
 
         <label for="rating">Rating</label>
         <br>

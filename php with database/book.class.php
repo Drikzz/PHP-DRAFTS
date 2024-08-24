@@ -47,7 +47,7 @@
         }
 
         function showAll(){
-            $sql = "SELECT * FROM book_content ORDER BY book_title ASC;";
+            $sql = "SELECT * FROM book_content ORDER BY book_title ASC LIMIT 10;";
 
             $query = $this->db->connection()->prepare($sql);
             $data = null;

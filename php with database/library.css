@@ -1,7 +1,14 @@
+:root {
+    --brown: #800000;
+    --light_b: #982B1C; /* Fixed typo */
+    --cream: #F2E8C6;
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
 }
 
 header {
@@ -10,17 +17,47 @@ header {
     align-items: center;
     height: 50px;
     padding: 50px 100px;
-    background-color: #800000;
-    color: white;
-
+    background-color: var(--brown);
 }
 
-header p, a {
+header p {
     text-decoration: none;
-    color: white;
     font-size: 3em;
+    color: white;
 }
+
+header a {
+    text-decoration: none;
+    font-size: 2em;
+    color: white;
+}
+
+/* Container for table
+.table-container {
+    margin: 50px 100px;
+    overflow: hidden; Ensures that the border-radius affects the table
+    border-radius: 20px;
+    border: 1px solid black;
+} */
 
 table {
-    padding: 50px 100px;
+    margin: 50px;
+    /* width: ; */
+    border-collapse: separate;
+    border-radius: 20px;
+    border-spacing: 0; 
+}
+
+table th {
+    text-align: center;
+    color: white;
+    width: auto;
+    background-color: var(--brown);
+    padding: 10px;
+}
+
+table td {
+    /* width: 100%; */
+
+    padding: 10px;
 }
