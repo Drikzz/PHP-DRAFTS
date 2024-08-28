@@ -10,11 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <p class="logo">The Book Haven</p>
-        <a href="addbook.php">Add Product</a>
+<header>
+        <p class="document-heading">The Book Haven</p>
+        <div class="view-button-container">
+            <a href="addbook.php" class="view-button">Add book</a>
+            <p class="login">Login</p>
+        </div>
     </header>
-    <table>
+    <div class="table-container">
+       <table>
         <tr>
             <th>No.</th>
             <th>Title</th>
@@ -64,6 +68,8 @@
                 $i++;
             }
         ?>
-    </table>
+    </table> 
+    </div>
+    
 </body>
 </html>

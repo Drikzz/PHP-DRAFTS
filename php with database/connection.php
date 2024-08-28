@@ -13,12 +13,4 @@
             return $this->connection_var;
         }
     }
-
-    // $book_obj = new database;
-    // // $book_obj->connection();
-
-    // if ($book_obj->connection()) {
-    //     echo True;
-    // }
-
 ?>

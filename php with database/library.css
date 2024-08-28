@@ -1,7 +1,8 @@
 :root {
-    --brown: #800000;
-    --light_b: #982B1C; /* Fixed typo */
-    --cream: #F2E8C6;
+    --darkbrown: #800000;
+    --midbrown: #982B1C;
+    --pale: #FFDBB5;
+    --cream: #FFEAC5;
 }
 
 * {
@@ -15,49 +16,70 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
-    padding: 50px 100px;
-    background-color: var(--brown);
-}
-
-header p {
-    text-decoration: none;
-    font-size: 3em;
+    height: 10vh;
+    padding: 0 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     color: white;
 }
 
-header a {
-    text-decoration: none;
-    font-size: 2em;
-    color: white;
+.document-heading {
+    color: var(--darkbrown);
+    font-size: 1.8em;
+    font-weight: 600;
 }
 
-/* Container for table
+.view-button-container {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: var(--darkbrown); */
+}
+
+.view-button {
+    text-decoration: underline  ;
+    color: var(--darkbrown);
+}
+
+.login {
+    padding: 10px;
+    background-color: var(--darkbrown);
+    color: white;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
 .table-container {
-    margin: 50px 100px;
-    overflow: hidden; Ensures that the border-radius affects the table
-    border-radius: 20px;
-    border: 1px solid black;
-} */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
 
 table {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
     margin: 50px;
-    /* width: ; */
-    border-collapse: separate;
-    border-radius: 20px;
-    border-spacing: 0; 
+    border-radius: 10px;
+    height: auto;
+    border-spacing: 0;
+    overflow: hidden;
+    border-collapse: collapse;
 }
 
-table th {
-    text-align: center;
+th, td {
+    padding: 10px 10px;
+    text-align: start; 
+}
+
+th {
+    background-color: var(--midbrown);
+    text-align: start;
     color: white;
-    width: auto;
-    background-color: var(--brown);
-    padding: 10px;
+    text-transform: uppercase;
+    /* border-radius: 5px; */
 }
 
-table td {
-    /* width: 100%; */
-
-    padding: 10px;
+tr:nth-child(odd) {
+    background-color: var(--midbrown);
+    color: white;
 }
