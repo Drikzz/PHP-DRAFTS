@@ -21,6 +21,9 @@
        <table>
         <tr>
             <th>No.</th>
+            <!-- ADDED -->
+            <th>Barcode</th>
+
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
@@ -32,6 +35,9 @@
             <th>Age Group</th>
             <th>Book Rating</th>
             <th>Description</th>
+            
+            <!-- ADDED -->
+            <th>Manage</th>
         </tr>
 
         <?php
@@ -50,8 +56,11 @@
                 $age_group_display = implode(', ', $age_group_array);
 
                 ?>
-                <tr>
+                <tr class="data-row">
                     <td><?= $i ?></td>
+                    <!-- ADDED -->
+                    <td><?= $arr['book_barcode']?></td>
+
                     <td><?= $arr['book_title']?></td>
                     <td><?= $arr['book_author']?></td>
                     <td><?= $arr['book_genre']?></td>
@@ -63,6 +72,8 @@
                     <td><?= $age_group_display ?></td>
                     <td><?= $arr['book_rating']?></td>
                     <td><?= $arr['book_desc']?></td>
+
+                    <td><a href="editbook.php?book_selected=<?= $arr['book_id']?>">Edit</a></td>
                 </tr>
                 <?php
                 $i++;

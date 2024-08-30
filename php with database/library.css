@@ -71,6 +71,11 @@ th, td {
     text-align: start; 
 }
 
+td a {
+    color: black;
+    text-decoration: none;
+}
+
 th {
     background-color: var(--midbrown);
     text-align: start;
@@ -79,7 +84,7 @@ th {
     /* border-radius: 5px; */
 }
 
-tr:nth-child(odd) {
+.data-row:nth-child(odd) {
     background-color: var(--midbrown);
     color: white;
 }
