@@ -106,8 +106,28 @@
             }
         }
 
-        function unique_barcode($barcode) {
-            //bukas na
+        function is_unique_barcode($barcode) {
+            // Prepare the SQL statement
+
+            // return $barcode;
+            $sql = "SELECT book_barcode FROM book_content WHERE book_barcode = :barcode";
+            $query = $this->db->connection()->prepare($sql);
+            
+            // // Bind the barcode parameter
+            $query->bindParam(':barcode', $barcode, PDO::PARAM_STR);
+        
+            // // Execute the query
+            $query->execute();
+        
+            // // Fetch the result
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+            // Return true if no result found (barcode is unique), false otherwise
+            if ($result) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
     ?>

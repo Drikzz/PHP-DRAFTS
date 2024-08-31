@@ -1,13 +1,15 @@
 <?php 
     require_once('function_clean.php');
+    require_once('book.class.php');
 
-    $title = $author = $genre = $publisher = $pub_date = $edition = $copies = $format = $rating = $desc = '';
+    $barcode = $title = $author = $genre = $publisher = $pub_date = $edition = $copies = $format = $rating = $desc = '';
     $age_group = []; //Initialize age group as array
-    $titleErr = $authorErr = $genreErr = $publisherErr = $pub_dateErr = $editionErr = $copiesErr = $formatErr = $age_groupErr = $ratingErr = $descErr = '';
+    $barcodeErr = $titleErr = $authorErr = $genreErr = $publisherErr = $pub_dateErr = $editionErr = $copiesErr = $formatErr = $age_groupErr = $ratingErr = $descErr = '';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //Getting inputs from the add book form
+        $barcode = clean($_POST['barcode']);
         $title = clean($_POST['title']);
         $author = clean($_POST['author']);
         $genre = clean($_POST['genre']);
@@ -23,9 +25,19 @@
         }
         
         $rating = clean($_POST['rating']);
+        echo $rating;
         $desc = clean($_POST['desc']);
 
         //Error checking
+        $bookObj = new book();
+        $book_barcode = $bookObj->is_unique_barcode($barcode);
+
+        if (empty($barcode)) {
+            $barcodeErr = "* Barcode required";
+        } elseif (!$book_barcode) {
+            $barcodeErr = "* Barcode $barcode already exists";
+        }
+
         if (empty($title)) {
             $titleErr = '* Title required!';
         }
@@ -72,19 +84,19 @@
 
         if (empty($rating) || $rating < 1 || $rating > 5) {
             $ratingErr = '* Rating required';
+        } else {
+            $ratingErr = "* Rating must be a valid number";
         }
 
         if (empty($desc)) {
             $descErr = '* Description required!';
         }
 
-        if (empty($titleErr) && empty($authorErr) && empty($genreErr) && empty($publisherErr) && empty($pub_dateErr) && empty($editionErr) 
+        if (empty($barcodeErr) && empty($titleErr) && empty($authorErr) && empty($genreErr) && empty($publisherErr) && empty($pub_dateErr) && empty($editionErr) 
             && empty($copiesErr) && empty($formatErr) && empty($age_groupErr) && empty($ratingErr) && empty($descErr)) {
                 
             //if no errors, then save to db
-            require_once('book.class.php');
-
-            $bookObj = new book();
+            $bookObj->barcode = $barcode;
             $bookObj->title = $title;
             $bookObj->author = $author;
             $bookObj->genre = $genre;
@@ -96,6 +108,7 @@
             $bookObj->age_group = implode(',', $age_group); // Convert to string only when saving to DB
             $bookObj->rating = $rating;
             $bookObj->description = $desc;
+            // var_dump($bookObj->add_book());
             if ($bookObj->add_book()) {
                 header('location: library.php');
             }
@@ -141,6 +154,20 @@
         <div class="input-container">
 
             <div class="left-form-inputs">
+
+                <div class="input-error">
+                    <label for="title">Book Barcode</label>
+                    
+                    <?php
+                        if (!empty($barcodeErr)) {
+                            ?>
+                            <span class="error"><?= $barcodeErr ?></span>
+                            <?php
+                        }
+                    ?>
+                </div>
+                <input type="number" name="barcode" id="barcode" value="<?= $barcode ?>" placeholder="Enter Book Barcode">
+
                 <div class="input-error">
                     <label for="title">Book Title</label>
                     
@@ -303,7 +330,7 @@
 
                 <div class="bar-container">
                     <span>1</span>
-                    <input type="range" name="rating" class="bar" id="rating" min="1" max="5">
+                    <input type="range" name="rating" class="bar" id="rating" min="1" max="5" value="<?= (isset($rating) && $rating != '') ? $rating : 0?>">
                     <span>5</span>
                 </div>
                 
@@ -318,7 +345,7 @@
                     ?>  
                 </div>
                 
-                <input type="text" name="desc" class="desc" id="desc" placeholder="Describe this book (optional)"">
+                <input type="text" name="desc" class="desc" id="desc" value="<?= $desc ?>" placeholder="Describe this book (optional)"">
 
                 <input type="submit" name="submit" class="submit-btn" value="Submit">
             </div>

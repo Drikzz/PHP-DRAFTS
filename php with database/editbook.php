@@ -14,7 +14,6 @@
         $selected_book = new Book;
         $book_contents = $selected_book->showbookonly($book_id);
         
-        
         // Populate form with current book data
         $barcode = $book_contents['book_barcode'];  
         $title = $book_contents['book_title'];  
@@ -56,12 +55,15 @@
         $desc = clean($_POST['desc']);
 
         //Error checking
+        $bookObj = new book();
+        $book_barcode = $bookObj->is_unique_barcode($barcode);
 
-        //for 
         if (empty($barcode)) {
             $barcodeErr = "* Barcode required";
+        } elseif (!$book_barcode) {
+            $barcodeErr = "* Barcode $barcode already exists";
         }
-
+        
         if (empty($title)) {
             $titleErr = '* Title required!';
         }
