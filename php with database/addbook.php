@@ -25,7 +25,7 @@
         }
         
         $rating = clean($_POST['rating']);
-        echo $rating;
+        
         $desc = clean($_POST['desc']);
 
         //Error checking

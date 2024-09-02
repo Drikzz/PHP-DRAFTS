@@ -128,6 +128,49 @@
             } else {
                 return true;
             }
+        } 
+
+        function update_book_details($book_id) {
+            // Prepare the SQL update statement
+            $sql = "UPDATE book_content SET 
+                book_barcode = :barcode, 
+                book_title = :title, 
+                book_author = :author, 
+                book_genre = :genre, 
+                book_publisher = :publisher,
+                book_pub_date = :pub_date, 
+                book_edition = :edition, 
+                book_copies = :copies, 
+                book_format = :format, 
+                book_age_group = :age_group, 
+                book_rating = :rating,
+                book_desc = :description 
+                WHERE book_id = :book_id";
+        
+            $query = $this->db->connection()->prepare($sql);
+            $query->bindParam(':barcode', $barcode, PDO::PARAM_STR);
+            $query->bindParam(':title', $title);
+            $query->bindParam(':author', $author);
+            $query->bindParam(':genre', $genre);
+            $query->bindParam(':publisher', $publisher);
+            $query->bindParam(':pub_date', $pub_date);
+            $query->bindParam(':edition', $edition);
+            $query->bindParam(':copies', $copies);
+            $query->bindParam(':format', $format);
+            $query->bindParam(':age_group', $age_group);
+            $query->bindParam(':rating', $rating);
+            $query->bindParam(':description', $description);
+            $query->bindParam(':book_id', $book_id, PDO::PARAM_INT);
+        
+            // Execute the update and return true if successful, false otherwise
+            if ($query->execute()) {
+                echo "Debug: Update successful.\n";
+                return true;
+            } else {
+                echo "Debug: Update failed.\n";
+                return false;
+            }
         }
+        
     }
     ?>

@@ -133,7 +133,7 @@
             $bookObj->age_group = implode(',', $age_group); // Convert to string only when saving to DB
             $bookObj->rating = $rating;
             $bookObj->description = $desc;
-            if ($bookObj->edit_book($_GET['book_selected'])) {
+            if ($bookObj->update_book_details($_GET['book_selected'])) {
                 header('location: library.php');
             }
             else {
