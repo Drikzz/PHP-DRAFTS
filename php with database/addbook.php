@@ -25,7 +25,7 @@
         }
         
         $rating = clean($_POST['rating']);
-        
+        // echo $rating;
         $desc = clean($_POST['desc']);
 
         //Error checking
@@ -82,10 +82,10 @@
             $age_groupErr = '* Age Group required!';
         }
 
-        if (empty($rating) || $rating < 1 || $rating > 5) {
-            $ratingErr = '* Rating required';
-        } else {
-            $ratingErr = "* Rating must be a valid number";
+        if (empty($rating)) {
+            $ratingErr = '* Rating required!';
+        } elseif (!(is_numeric($rating)) || $rating < 1 || $rating > 5) {
+            $ratingErr = '* Rating must be a number between 1 and 5!';
         }
 
         if (empty($desc)) {
@@ -330,7 +330,7 @@
 
                 <div class="bar-container">
                     <span>1</span>
-                    <input type="range" name="rating" class="bar" id="rating" min="1" max="5" value="<?= (isset($rating) && $rating != '') ? $rating : 0?>">
+                    <input type="range" name="rating" class="bar" id="rating" min="1" max="5" value="<?= $rating ?>">
                     <span>5</span>
                 </div>
                 

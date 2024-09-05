@@ -148,18 +148,20 @@
                 WHERE book_id = :book_id";
         
             $query = $this->db->connection()->prepare($sql);
-            $query->bindParam(':barcode', $barcode, PDO::PARAM_STR);
-            $query->bindParam(':title', $title);
-            $query->bindParam(':author', $author);
-            $query->bindParam(':genre', $genre);
-            $query->bindParam(':publisher', $publisher);
-            $query->bindParam(':pub_date', $pub_date);
-            $query->bindParam(':edition', $edition);
-            $query->bindParam(':copies', $copies);
-            $query->bindParam(':format', $format);
-            $query->bindParam(':age_group', $age_group);
-            $query->bindParam(':rating', $rating);
-            $query->bindParam(':description', $description);
+        
+            // Bind the class properties to the query parameters
+            $query->bindParam(':barcode', $this->barcode, PDO::PARAM_STR);
+            $query->bindParam(':title', $this->title);
+            $query->bindParam(':author', $this->author);
+            $query->bindParam(':genre', $this->genre);
+            $query->bindParam(':publisher', $this->publisher);
+            $query->bindParam(':pub_date', $this->pub_date);
+            $query->bindParam(':edition', $this->edition);
+            $query->bindParam(':copies', $this->copies);
+            $query->bindParam(':format', $this->format);
+            $query->bindParam(':age_group', $this->age_group);
+            $query->bindParam(':rating', $this->rating);
+            $query->bindParam(':description', $this->description);
             $query->bindParam(':book_id', $book_id, PDO::PARAM_INT);
         
             // Execute the update and return true if successful, false otherwise
