@@ -59,9 +59,30 @@
         $book_barcode = $bookObj->is_unique_barcode($barcode);
 
         if (empty($barcode)) {
+
+            //Empty barcode input
             $barcodeErr = "* Barcode required";
-        } elseif (!$book_barcode) {
+
+        } elseif (!$book_barcode && $barcode != $book_contents['book_barcode']) {
+
+            echo $barcode;
+            //Checks if the current barcode is unique and not owned by another book 
             $barcodeErr = "* Barcode $barcode already exists";
+
+        } else {
+
+            //proceed to update the book details in the database
+            // If barcode remains unchanged or passes first 2 condition then update this book.
+
+            $result = $bookObj->edit_book($book_id);
+
+            if ($result) {
+                // Success message or redirect
+                echo "Book details updated successfully!";
+            } else {
+                // Handle error if update fails
+                echo "Failed to update book details.";
+            }
         }
         
         if (empty($title)) {
@@ -371,7 +392,7 @@
                     ?>  
                 </div>
                 
-                <input type="text" name="desc" class="desc" id="desc" value="<?= $desc ?>" placeholder="Describe this book (optional)"">
+                <input type="text" name="desc" class="desc" id="desc" value="<?= $desc ?>" placeholder="Describe this book (optional)">
 
                 <input type="submit" name="submit" class="submit-btn" value="Update details">
             </div>
