@@ -58,7 +58,6 @@
 
             } elseif (!$book_barcode && $barcode != $book_contents['book_barcode']) {
 
-                echo $barcode;
                 //Checks if the current barcode is unique and not owned by another book 
                 $barcodeErr = "* Barcode $barcode already exists";
 
@@ -202,7 +201,7 @@
                         <label for="title">Book Barcode</label>
                         
                         <?php
-                            if (empty($_POST['barcode'])) {
+                            if (!empty($barcodeErr)) {
                                 ?>
                                 <span class="error"><?= $barcodeErr ?></span>
                                 <?php
