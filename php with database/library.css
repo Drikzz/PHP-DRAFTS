@@ -53,14 +53,17 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
     /* height: 100vh; */
+    padding: 0 100px;
 }
 
 table {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    margin: 50px;
+    /* margin: 50px; */
     border-radius: 10px;
     height: auto;
+    width: 1fr;
     border-spacing: 0;
     overflow: hidden;
     border-collapse: collapse;
@@ -68,7 +71,8 @@ table {
 
 th, td {
     padding: 10px 10px;
-    text-align: start; 
+    text-align: start;
+    width: 1fr;
 }
 
 td a {
@@ -87,4 +91,49 @@ th {
 .data-row:nth-child(odd) {
     background-color: var(--midbrown);
     color: white;
+}
+
+.data-row:nth-child(odd) a {
+    /* background-color: var(--midbrown); */
+    color: white;
+}
+
+.search {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 100px;
+    /* background-color: red; */
+    gap: 10px;
+}
+
+.search .labels {
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.select_option {
+    padding: 10px 15px;
+    /* border: none; */
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid grey;
+}
+
+.search_bar, .submit {
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+.search_bar {
+    outline: none;
+    border: 1px solid grey;
+}
+
+.submit {
+    background-color: var(--midbrown);
+    color: white;
+    /* font-weight: 600; */
+    /* padding: 11px 11px; */
+    border: none;
 }

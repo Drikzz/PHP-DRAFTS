@@ -1,4 +1,4 @@
-//SQL query
+-- SQL query
 
 INSERT INTO book_content (
     book_barcode, 

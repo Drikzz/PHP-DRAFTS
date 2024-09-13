@@ -206,7 +206,7 @@
 
                 <select name="genre" id="genre">
                     <option value="">--SELECT--</option>
-                    <option value="Sci-Fi" <?= (isset($genre) && $genre=='Sci-Fi')? 'selected=true':'' ?>)>Sci-Fi</option>
+                    <option value="Sci-Fi" <?= (isset($genre) && $genre=='Sci-Fi')? 'selected=true':'' ?>>Sci-Fi</option>
                     <option value="Fantasy" <?= (isset($genre) && $genre=='Fantasy')? 'selected=true':'' ?>>Fantasy</option>
                     <option value="Romance" <?= (isset($genre) && $genre=='Romance')? 'selected=true':'' ?>>Romance</option>
                     <option value="Thriller" <?= (isset($genre) && $genre=='Thriller')? 'selected=true':'' ?>>Thriller</option>

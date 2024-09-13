@@ -51,9 +51,45 @@
         }
 
         function showAll(){
-            $sql = "SELECT * FROM book_content ORDER BY book_title ASC LIMIT 10;";
+            $sql = "SELECT * FROM book_content ORDER BY book_title ASC";
 
             $query = $this->db->connection()->prepare($sql);
+            $data = null;
+
+            if($query->execute()) {
+                $data = $query->fetchAll();
+            }
+
+            return $data;
+        }
+
+        function show_result($keyword = '', $genre = '', $format = '', $age_group = ''){
+
+            $age_string = explode(',', $age_group); //explode the string into an array
+            // echo " --- array count ";
+            // echo count($age_string);
+
+            // echo " --- array explode ";
+
+            // var_dump($age_string);
+
+            $age_array = implode("' OR book_age_group LIKE '%", $age_string); //implode the age_group into the age array for the query
+            
+            // echo " --- array implode ";
+            $age_array = "book_age_group LIKE '%" . $age_array . "%'"; //get the age_array for the query
+            
+            // var_dump($age_array);
+
+            $sql = "SELECT * FROM book_content WHERE (book_title LIKE '%' :keyword '%' OR book_author LIKE '%' :keyword '%')
+                    AND (book_genre LIKE '%' :genre '%')
+                    AND (book_format LIKE '%' :format '%')
+                    AND (" . $age_array . ");";
+
+            $query = $this->db->connection()->prepare($sql);
+            $query->bindParam(':keyword', $keyword); //search param
+            $query->bindParam(':genre', $genre);  //genre param
+            $query->bindParam(':format', $format);  //format param
+
             $data = null;
 
             if($query->execute()) {
@@ -172,6 +208,15 @@
                 echo "Debug: Update failed.\n";
                 return false;
             }
+        }
+
+        function deleteBook($book_id) {
+            $sql = "DELETE FROM book_content WHERE book_id = :book_id;";
+
+            $query = $this->db->connection()->prepare($sql);
+            $query->bindParam(':book_id', $book_id);
+
+            return $query->execute();
         }
         
     }
