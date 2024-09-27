@@ -11,7 +11,6 @@ class Product {
     public $name = '';          // The name of the product.
     public $category_id = '';      // The category the product belongs to.
     public $price = '';         // The price of the product.
-    public $availability = '';  // Availability status of the product (e.g., 'In Stock', 'Out of Stock').
 
     protected $db; // This will hold an instance of the Database class for database operations.
 
@@ -23,7 +22,7 @@ class Product {
     // The add() method is used to add a new product to the database.
     function add() {
         // SQL query to insert a new product into the 'product' table.
-        $sql = "INSERT INTO product (code, name, category_id, price, availability) VALUES (:code, :name, :category_id, :price, :availability);";
+        $sql = "INSERT INTO product (code, name, category_id, price) VALUES (:code, :name, :category_id, :price);";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -33,7 +32,6 @@ class Product {
         $query->bindParam(':name', $this->name);
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':price', $this->price);
-        $query->bindParam(':availability', $this->availability);
 
         // Execute the query. If successful, return true; otherwise, return false.
         return $query->execute();
@@ -43,7 +41,7 @@ class Product {
     function showAll($keyword='', $category='') {
         // SQL query to select all products, ordered alphabetically by name.
         // If keyword or category are provided, they are used for filtering the results.
-        $sql = "SELECT p.*, c.name as category_name FROM product p INNER JOIN category c ON p.category_id = c.id WHERE (p.code LIKE CONCAT('%', :keyword, '%') OR p.name LIKE CONCAT('%', :keyword, '%')) AND (c.id LIKE CONCAT('%', :category, '%')) ORDER BY p.name ASC;";
+        $sql = "SELECT p.*, c.name as category_name, SUM(IF(s.status='in', quantity, 0)) as stock_in, SUM(IF(s.status='out', quantity, 0)) as stock_out FROM product p INNER JOIN category c ON p.category_id = c.id LEFT JOIN stocks s ON p.id = s.product_id WHERE (p.code LIKE CONCAT('%', :keyword, '%') OR p.name LIKE CONCAT('%', :keyword, '%')) AND (c.id LIKE CONCAT('%', :category, '%')) GROUP BY p.id ORDER BY p.name ASC;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -65,7 +63,7 @@ class Product {
     // The edit() method is used to update an existing product in the database.
     function edit() {
         // SQL query to update an existing product in the 'product' table.
-        $sql = "UPDATE product SET code = :code, name = :name, category_id = :category_id, price = :price, availability = :availability WHERE id = :id;";
+        $sql = "UPDATE product SET code = :code, name = :name, category_id = :category_id, price = :price WHERE id = :id;";
 
         // Prepare the SQL statement for execution.
         $query = $this->db->connect()->prepare($sql);
@@ -75,7 +73,6 @@ class Product {
         $query->bindParam(':name', $this->name);
         $query->bindParam(':category_id', $this->category_id);
         $query->bindParam(':price', $this->price);
-        $query->bindParam(':availability', $this->availability);
         $query->bindParam(':id', $this->id);
 
         // Execute the query. If successful, return true; otherwise, return false.
@@ -169,35 +166,6 @@ class Product {
         // Return the fetched data. This will be an array of categories, where each category
         // is represented as an associative array with column names as keys.
         return $data;
-    }
-
-    public function fetch_stock($id) {
-        $sql = "SELECT
-                CASE
-                    WHEN SUM(IF(status = 'In', quantity, -quantity)) > 0 THEN 'In Stock'
-                    ELSE 'No Stock'
-                END AS stock_status
-                FROM stock 
-                WHERE product_id = :id";
-    
-        $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':id', $id);
-    
-        if ($query->execute()) {
-            // Fetch a single row as an associative array.
-            $data = $query->fetch(PDO::FETCH_ASSOC);
-            
-            if ($data) {
-                // Check the stock status
-                if ($data['stock_status'] === 'In Stock') {
-                    return 'In stock!';
-                } else {
-                    return 'No Stock';
-                }
-            }
-        }
-    
-        return 'No Stock'; // Last Resort if query fails
     }
 }
 
